@@ -1,0 +1,15 @@
+# License terms and conditions for Gluu Cloud Native Edition:
+# https://www.apache.org/licenses/LICENSE-2.0
+# Default values for cr-rotate.
+image:
+  repository: gluufederation/cr-rotate
+  tag: 4.2.1_01
+  pullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  crRotateServiceName: cr-rotate
+  port: 8084
+  name: http-cr-rotate
