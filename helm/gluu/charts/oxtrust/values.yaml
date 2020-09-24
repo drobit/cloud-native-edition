@@ -1,0 +1,27 @@
+# License terms and conditions for Gluu Cloud Native Edition:
+# https://www.apache.org/licenses/LICENSE-2.0
+# Default values for oxtrust.
+replicas: 1
+
+dynamicStorage: true
+
+image:
+  repository: gluufederation/oxtrust
+  tag: 4.1.0_01
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8080
+  clusterIp: None
+
+#resources: 
+limits:
+  memory: 128Mi
+requests:
+  memory: 300Mi
+
+#containerPOrt ot connect the container with
+containerPort: 8080
+
+    

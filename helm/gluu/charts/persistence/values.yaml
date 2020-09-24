@@ -1,0 +1,22 @@
+# License terms and conditions for Gluu Cloud Native Edition:
+# https://www.apache.org/licenses/LICENSE-2.0
+# Default values for persistence.
+replicaCount: 1
+
+image:
+  repository: gluufederation/persistence
+  tag: 4.1.0_01
+  pullPolicy: Always
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+configmap:
+  #support for oxtrust API
+  gluuOxtrustApiEnabled: false
+  gluuOxtrustApiTestMode: false
+  gluuCasaEnabled: true
+  gluuPassportEnabled: false
+  gluuRadiusEnabled: false
+  gluuSamlEnabled: true  

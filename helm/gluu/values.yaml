@@ -1,0 +1,175 @@
+global:
+  cloud:
+    enabled: true
+  provisioner: kubernetes.io/gce-pd
+  pool: default
+  fsType: ext4
+  gcePdStorageType: pd-standard
+  azureStorageAccountType: Standard_LRS
+  azureStorageKind: Managed
+  reclaimPolicy: Retain
+  nginxNamespace: ingress-nginx
+  nodeName: node-1
+  oxAuthServiceName: oxauth
+  oxTrustServiceName: oxtrust
+  ldapServiceName: opendj
+  nginxIp: "104.196.241.147"
+  domain: demoexample.gluu.org
+  isDomainRegistered: "false"
+  lbAddr: ""
+  gluuDocumentStoreType: JCA
+  gluuJcaSyncInterval: 300
+  gluuJcaRmiUrl: http://jackrabbit:8080/rmi
+  gluuJcaUrl: http://jackrabbit:8080
+  gluuJcaUsername: admin
+  gluuJcaPasswordFile: /etc/gluu/conf/jca_password
+  gluuLdapUrl: opendj:1636
+  gluuOxtrustBackend: oxtrust:8080
+  gluuOxauthBackend: oxauth:8080
+  gluuOxdServerUrl: oxd-server:8443
+  gluuRedisUrl: redis:6379
+  gluuRedisUseSsl: "false"
+  gluuRedisType: STANDALONE
+  gluuRedisSslTruststore: ""
+  gluuRedisSentinelGroup: ""
+  gluuSyncShibManifests: false
+  gluuSyncCasaManifests: false
+  gluuMaxRamPercent: "75.0"
+  configAdapterName: kubernetes
+  containerMetadataName: kubernetes
+  configSecretAdapter: kubernetes
+  gluuPersistenceType: ldap
+  gluuCacheType: NATIVE_PERSISTENCE
+  gluuPersistenceLdapMapping: ''
+  gluuCouchbaseCrt: ''
+  gluuCouchbasePass: ''
+  gluuCouchbaseUrl: ''
+  gluuCouchbaseUser: ''
+  gluuCouchbasePassFile: /etc/gluu/conf/couchbase_password
+  gluuCouchbaseCertFile: /etc/certs/couchbase.crt
+  oxauth:
+    enabled: true
+  config:
+    enabled: true
+  jackrabbit:
+    enabled: true
+  persistence:
+    enabled: true
+  oxtrust:
+    enabled: true
+  opendj:
+    enabled: true
+  oxshibboleth:
+    enabled: false
+  oxd-server:
+    enabled: false
+  nginx:
+    enabled: true
+  key-rotation:
+    enabled: false
+  cr-rotate:
+    enabled: false
+casa:
+  image:
+    repository: gluufederation/casa
+    tag: 4.2.0_dev
+    pullPolicy: Always
+config:
+  orgName: Gluu
+  email: support@gluu.org
+  adminPass: M6*Hk@
+  ldapPass: 4N}|Zr
+  countryCode: US
+  state: TX
+  city: Austin
+  ldapType: opendj
+  image:
+    repository: gluufederation/config-init
+    tag: 4.1.1_03
+cr-rotate:
+  image:
+    repository: gluufederation/cr-rotate
+    tag: 4.1.1_02
+    pullPolicy: Always
+key-rotation:
+  image:
+    repository: gluufederation/key-rotation
+    tag: 4.1.1_04
+    pullPolicy: Always
+jackrabbit:
+  replicas: 1
+  storage:
+    size: 5Gi
+  image:
+    repository: gluufederation/jackrabbit
+    tag: 4.1.1_02
+    pullPolicy: Always
+opendj:
+  gluuRedisEnabled: false
+  replicas: 1
+  persistence:
+    size: 4Gi
+  image:
+    repository: gluufederation/wrends
+    tag: 4.1.1_03
+    pullPolicy: Always
+  gluuCacheType: NATIVE_PERSISTENCE
+persistence:
+  image:
+    repository: gluufederation/persistence
+    tag: 4.1.1_04
+    pullPolicy: Always
+  configmap:
+    gluuOxtrustApiEnabled: true
+    gluuOxtrustApiTestMode: false
+    gluuPassportEnabled: false
+    gluuCasaEnabled: false
+    gluuRadiusEnabled: false
+    gluuSamlEnabled: true
+oxauth:
+  image:
+    repository: gluufederation/oxauth
+    tag: 4.1.1_09
+    pullPolicy: Always
+oxd-server:
+  configmap:
+    adminKeystorePassword: ''
+    applicationKeystorePassword: ''
+    applicationKeystoreCn: oxd-server
+    adminKeystoreCn: oxd-server
+  image:
+    repository: gluufederation/oxd-server
+    tag: 4.1.1_02
+    pullPolicy: Always
+  resources: {}
+nginx:
+  ingress:
+    enabled: true
+    path: /
+    hosts:
+    - demoexample.gluu.org
+    tls:
+    - secretName: tls-certificate # DON'T change
+      hosts:
+      - demoexample.gluu.org
+oxpassport:
+  image:
+    repository: gluufederation/oxpassport
+    tag: 4.1.1_02
+    pullPolicy: Always
+  resources: {}
+oxshibboleth:
+  image:
+    repository: gluufederation/oxshibboleth
+    tag: 4.1.1_04
+    pullPolicy: Always
+oxtrust:
+  image:
+    repository: gluufederation/oxtrust
+    tag: 4.1.1_04
+    pullPolicy: Always
+radius:
+  image:
+    repository: gluufederation/radius
+    tag: 4.1.1_02
+    pullPolicy: Always

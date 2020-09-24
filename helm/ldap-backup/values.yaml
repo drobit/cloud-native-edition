@@ -1,0 +1,37 @@
+gluuLdapInit: true
+gluuOxtrustConfigGeneration: true
+gluuLdapInitPort: 1636
+ldapServiceName: opendj
+ldapPass: 4N}|Zr
+concurrencyPolicy: Forbid
+gluuRedisEnabled: false
+gluuLdapAutoReplicate: false
+gluuRedisUrl: redis:6379
+gluuCacheType: NATIVE_PERSISTENCE
+gluuRedisType: STANDALONE
+configAdapterName: kubernetes
+configSecretAdapter: kubernetes
+gluuOxtrustConfigGenerationRepl: false
+nameOverride: ""
+fullnameOverride: ""
+restartPolicy: Never
+image:
+  repository: gluufederation/wrends
+  tag: 4.1.0_01
+  pullPolicy: Always
+serviceAccount:
+  create: true
+  name:
+ports:
+  ldaps:
+    port: 1636
+    targetPort: 1636
+  ldap:
+    port: 1389
+    targetPort: 1389
+  replication:
+    port: 8989
+    targetPort: 8989
+  admin:
+    port: 4444
+    targetPort: 4444

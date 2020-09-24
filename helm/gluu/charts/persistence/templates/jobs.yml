@@ -1,0 +1,41 @@
+# License terms and conditions for Gluu Cloud Native Edition:
+# https://www.apache.org/licenses/LICENSE-2.0
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "persistence.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "persistence.labels" . | indent 4 }}
+spec:
+  template:
+    metadata:
+      name: {{ include "persistence.name" . }}
+      labels:
+        app: {{ include "persistence.name" . }}
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: {{ include "persistence.name" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        envFrom:
+        - configMapRef:
+            name: {{ include "persistence.fullname" . }}
+        {{- if or (eq .Values.global.gluuPersistenceType "couchbase") (eq .Values.global.gluuPersistenceType "hybrid")  }}
+        volumeMounts:
+          - name: cb-pass
+            mountPath: "/etc/gluu/conf/couchbase_password"
+            subPath: couchbase_password
+          - name: cb-crt 
+            mountPath: "/etc/certs/couchbase.crt"
+            subPath: couchbase.crt
+        {{- end }}
+      {{- if or (eq .Values.global.gluuPersistenceType "couchbase") (eq .Values.global.gluuPersistenceType "hybrid")  }}
+      volumes:
+        - name: cb-pass
+          secret:
+            secretName: {{ .Release.Name }}-cb-pass
+        - name: cb-crt 
+          secret:
+            secretName: {{ .Release.Name }}-cb-crt
+      {{- end }}

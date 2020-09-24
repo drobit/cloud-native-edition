@@ -1,0 +1,16 @@
+# License terms and conditions for Gluu Cloud Native Edition:
+# https://www.apache.org/licenses/LICENSE-2.0
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "casa.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+{{ include "casa.labels" . | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.service.port }}
+      name: casa
+  selector:
+    app: {{ include "casa.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

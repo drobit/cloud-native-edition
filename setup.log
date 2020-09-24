@@ -1,0 +1,106 @@
+2020-09-24 18:23:15,231 - python-k8-installer - WARNING - https://github.com/kubernetes-client/python/issues/1022 We have provided an in-house workaround for the issue regarding  building CRDs with kubernetes client. This workaround will be removed once resolved by kubernetes
+2020-09-24 18:23:48,482 - gluu-prompt         -  INFO - Currently supported versions are : 
+2020-09-24 18:23:48,483 - gluu-prompt         -  INFO - 4.2.0_dev
+2020-09-24 18:23:48,483 - gluu-prompt         -  INFO - DEV VERSION : 4.2.0_dev
+2020-09-24 18:23:48,483 - gluu-prompt         -  INFO - 4.1
+2020-09-24 18:23:48,483 - gluu-prompt         -  INFO - 4.0
+2020-09-24 18:24:40,345 - gluu-prompt         -  INFO - Jackrabbit must be installed. If the following prompt is answered with N it is assumed the jackrabbit content repository is either installed locally or remotely
+2020-09-24 18:24:50,243 - gluu-prompt         -  INFO - Determining OS type and attempting to gather external IP address
+2020-09-24 18:24:51,005 - gluu-kubernetes-api -  INFO - Getting list of nodes
+2020-09-24 18:24:51,170 - gluu-kubernetes-api -  INFO - Getting node gke-gkegluu-default-pool-c19f56ec-j85j data
+2020-09-24 18:24:51,355 - gluu-kubernetes-api -  INFO - Getting node gke-gkegluu-default-pool-c19f56ec-kl28 data
+2020-09-24 18:25:22,929 - gluu-common         -  INFO - Success! oxTrust password was set.
+2020-09-24 18:25:23,816 - gluu-common         -  INFO - Success! LDAP password was set.
+2020-09-24 18:25:26,533 - gluu-prompt         -  INFO - You can mount your FQDN certification and key by placing them inside gluu.crt and gluu.key respectivley at the same location pygluu-kuberentest.pyz is at.
+2020-09-24 18:25:46,330 - gluu-kubernetes-api -  INFO - Created namespace gluu
+2020-09-24 18:25:46,910 - gluu-kubernetes-api -  INFO - customeresource/virtualservers.k8s.nginx.org has been removed or does not exist
+2020-09-24 18:25:47,075 - gluu-kubernetes-api -  INFO - customeresource/virtualserverroutes.k8s.nginx.org has been removed or does not exist
+2020-09-24 18:25:47,643 - gluu-kubernetes-api -  INFO - role/ingress-nginx-nginx-ingress has been removed or does not exist
+2020-09-24 18:25:47,809 - gluu-kubernetes-api -  INFO - clusterrolebinding/ingress-nginx-nginx-ingress has been removed or does not exist
+2020-09-24 18:25:47,952 - gluu-kubernetes-api -  INFO - Created namespace ingress-nginx
+2020-09-24 18:25:48,117 - gluu-kubernetes-api -  INFO - role/ningress-nginx-ingress-controller has been removed or does not exist
+2020-09-24 18:25:48,279 - gluu-kubernetes-api -  INFO - clusterrolebinding/ningress-nginx-ingress-controller has been removed or does not exist
+2020-09-24 18:25:51,442 - gluu-common         -  INFO - "stable" has been added to your repositories
+
+2020-09-24 18:25:54,119 - gluu-common         -  INFO - Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "appscode" chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈ 
+
+2020-09-24 18:26:02,201 - gluu-common         -  INFO - WARNING: This chart is deprecated
+NAME: ningress
+LAST DEPLOYED: Thu Sep 24 18:25:57 2020
+NAMESPACE: ingress-nginx
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+*******************************************************************************************************
+* DEPRECATED, please use https://github.com/kubernetes/ingress-nginx/tree/master/charts/ingress-nginx *
+*******************************************************************************************************
+
+
+The nginx-ingress controller has been installed.
+It may take a few minutes for the LoadBalancer IP to be available.
+You can watch the status by running 'kubectl --namespace ingress-nginx get services -o wide -w ningress-nginx-ingress-controller'
+
+An example Ingress that makes use of the controller:
+
+  apiVersion: extensions/v1beta1
+  kind: Ingress
+  metadata:
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    name: example
+    namespace: foo
+  spec:
+    rules:
+      - host: www.example.com
+        http:
+          paths:
+            - backend:
+                serviceName: exampleService
+                servicePort: 80
+              path: /
+    # This section is only required if TLS is to be enabled for the Ingress
+    tls:
+        - hosts:
+            - www.example.com
+          secretName: example-tls
+
+If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:
+
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: example-tls
+    namespace: foo
+  data:
+    tls.crt: <base64 encoded cert>
+    tls.key: <base64 encoded key>
+  type: kubernetes.io/tls
+
+2020-09-24 18:26:02,345 - gluu-kubernetes-api -  INFO - Reading service ningress-nginx-ingress-controller
+2020-09-24 18:26:02,345 - gluu-helm           -  INFO - Waiting for the ip of the Loadbalancer
+2020-09-24 18:26:12,499 - gluu-kubernetes-api -  INFO - Reading service ningress-nginx-ingress-controller
+2020-09-24 18:26:12,499 - gluu-helm           -  INFO - Waiting for the ip of the Loadbalancer
+2020-09-24 18:26:22,653 - gluu-kubernetes-api -  INFO - Reading service ningress-nginx-ingress-controller
+2020-09-24 18:26:22,654 - gluu-helm           -  INFO - Waiting for the ip of the Loadbalancer
+2020-09-24 18:26:32,807 - gluu-kubernetes-api -  INFO - Reading service ningress-nginx-ingress-controller
+2020-09-24 18:26:32,808 - gluu-helm           -  INFO - Waiting for the ip of the Loadbalancer
+2020-09-24 18:26:42,954 - gluu-kubernetes-api -  INFO - Reading service ningress-nginx-ingress-controller
+2020-09-24 18:26:42,954 - gluu-helm           -  INFO - 104.196.241.147
+2020-09-24 18:26:53,584 - gluu-common         -  INFO - NAME: gluu
+LAST DEPLOYED: Thu Sep 24 18:26:44 2020
+NAMESPACE: gluu
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+2020-09-24 18:26:57,379 - gluu-common         -  INFO - NAME: gluu-ldap-backup
+LAST DEPLOYED: Thu Sep 24 18:26:55 2020
+NAMESPACE: gluu
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
