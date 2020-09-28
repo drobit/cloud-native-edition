@@ -1,0 +1,21 @@
+# License terms and conditions for Gluu Cloud Native Edition:
+# https://www.apache.org/licenses/LICENSE-2.0
+image:
+  repository: gluufederation/scim
+  tag: 4.2.1_02
+  pullPolicy: Always
+
+#Resources for the deployment
+requests:
+  memory: 1000Mi
+limits:
+  memory: 1000Mi
+
+#ports for the deployment
+ports:
+  containerPort: 8080
+
+# service
+service:
+  scimServiceName: scim
+  name: http-scim
