@@ -1,0 +1,55 @@
+# License terms and conditions for Gluu Cloud Native Edition:
+# https://www.apache.org/licenses/LICENSE-2.0
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ include "cr-rotate.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    APP_NAME: cr-rotote
+{{ include "cr-rotate.labels" . | indent 4 }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "cr-rotate.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "cr-rotate.name" . }}
+        release: {{ .Release.Name }}
+        APP_NAME: cr-rotate
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config-cm
+          {{- if or (eq .Values.global.gluuPersistenceType "couchbase") (eq .Values.global.gluuPersistenceType "hybrid") }}
+          volumeMounts:
+            - name: cb-pass
+              mountPath: "/etc/gluu/conf/couchbase_password"
+              subPath: couchbase_password
+            - name: cb-crt 
+              mountPath: "/etc/certs/couchbase.crt"
+              subPath: couchbase.crt
+          {{- end }}
+          {{- if or (eq .Values.global.provisioner "microk8s.io/hostpath" ) (eq .Values.global.provisioner "k8s.io/minikube-hostpath") }}
+          resources: {}
+          {{- else if .Values.global.cloud.testEnviroment }}
+          resources: {}
+          {{- else }}
+          resources:
+{{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+      {{- if or (eq .Values.global.gluuPersistenceType "couchbase") (eq .Values.global.gluuPersistenceType "hybrid") }}
+      volumes:
+        - name: cb-pass
+          secret:
+            secretName: {{ .Release.Name }}-cb-pass 
+        - name: cb-crt 
+          secret:
+            secretName: {{ .Release.Name }}-cb-crt
+      {{- end }}    
