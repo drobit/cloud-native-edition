@@ -1,0 +1,164 @@
+{
+    "apiVersion": "apps/v1",
+    "kind": "StatefulSet",
+    "metadata": {
+        "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"StatefulSet\",\"metadata\":{\"annotations\":{\"kubernetes.io/change-cause\":\"kubectl apply --filename=gluu_gke_yamls/. --record=true --force=true\"},\"labels\":{\"APP_NAME\":\"oxtrust\",\"app\":\"oxtrust\"},\"name\":\"oxtrust\",\"namespace\":\"gluu\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"oxtrust\"}},\"serviceName\":\"oxtrust\",\"template\":{\"metadata\":{\"annotations\":{\"sidecar.istio.io/rewriteAppHTTPProbers\":\"true\"},\"labels\":{\"APP_NAME\":\"oxtrust\",\"app\":\"oxtrust\"}},\"spec\":{\"containers\":[{\"envFrom\":[{\"configMapRef\":{\"name\":\"gluu-config-cm\"}}],\"image\":\"gluufederation/oxtrust:4.2.2_01\",\"imagePullPolicy\":\"Always\",\"livenessProbe\":{\"exec\":{\"command\":[\"python3\",\"/app/scripts/healthcheck.py\"]},\"initialDelaySeconds\":30,\"periodSeconds\":30,\"timeoutSeconds\":5},\"name\":\"oxtrust\",\"ports\":[{\"containerPort\":8080}],\"readinessProbe\":{\"exec\":{\"command\":[\"python3\",\"/app/scripts/healthcheck.py\"]},\"initialDelaySeconds\":25,\"periodSeconds\":25,\"timeoutSeconds\":5},\"volumeMounts\":[{\"mountPath\":\"/etc/gluu/conf/couchbase_password\",\"name\":\"cb-pass\",\"subPath\":\"couchbase_password\"},{\"mountPath\":\"/etc/certs/couchbase.crt\",\"name\":\"cb-crt\",\"subPath\":\"couchbase.crt\"},{\"mountPath\":\"/etc/gluu/conf/jackrabbit_admin_password\",\"name\":\"gluu-jackrabbit-admin-pass\",\"subPath\":\"jackrabbit_admin_password\"}]}],\"hostAliases\":[{\"hostnames\":[\"demoexample.gluu.org\"],\"ip\":\"22.22.22.22\"}],\"volumes\":[{\"name\":\"cb-pass\",\"secret\":{\"secretName\":\"cb-pass\"}},{\"name\":\"cb-crt\",\"secret\":{\"secretName\":\"cb-crt\"}},{\"name\":\"gluu-jackrabbit-admin-pass\",\"secret\":{\"secretName\":\"gluu-jackrabbit-admin-pass\"}}]}},\"volumeClaimTemplates\":[]}}\n",
+            "kubernetes.io/change-cause": "kubectl apply --filename=gluu_gke_yamls/. --record=true --force=true"
+        },
+        "creationTimestamp": "2020-12-22T20:21:49Z",
+        "generation": 1,
+        "labels": {
+            "APP_NAME": "oxtrust",
+            "app": "oxtrust"
+        },
+        "name": "oxtrust",
+        "namespace": "gluu",
+        "resourceVersion": "37344",
+        "selfLink": "/apis/apps/v1/namespaces/gluu/statefulsets/oxtrust",
+        "uid": "2c30e9c0-d738-41d9-a7e2-1d00a11db407"
+    },
+    "spec": {
+        "podManagementPolicy": "OrderedReady",
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+            "matchLabels": {
+                "app": "oxtrust"
+            }
+        },
+        "serviceName": "oxtrust",
+        "template": {
+            "metadata": {
+                "annotations": {
+                    "sidecar.istio.io/rewriteAppHTTPProbers": "true"
+                },
+                "creationTimestamp": null,
+                "labels": {
+                    "APP_NAME": "oxtrust",
+                    "app": "oxtrust"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "envFrom": [
+                            {
+                                "configMapRef": {
+                                    "name": "gluu-config-cm"
+                                }
+                            }
+                        ],
+                        "image": "gluufederation/oxtrust:4.2.2_01",
+                        "imagePullPolicy": "Always",
+                        "livenessProbe": {
+                            "exec": {
+                                "command": [
+                                    "python3",
+                                    "/app/scripts/healthcheck.py"
+                                ]
+                            },
+                            "failureThreshold": 3,
+                            "initialDelaySeconds": 30,
+                            "periodSeconds": 30,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 5
+                        },
+                        "name": "oxtrust",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "exec": {
+                                "command": [
+                                    "python3",
+                                    "/app/scripts/healthcheck.py"
+                                ]
+                            },
+                            "failureThreshold": 3,
+                            "initialDelaySeconds": 25,
+                            "periodSeconds": 25,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 5
+                        },
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/etc/gluu/conf/couchbase_password",
+                                "name": "cb-pass",
+                                "subPath": "couchbase_password"
+                            },
+                            {
+                                "mountPath": "/etc/certs/couchbase.crt",
+                                "name": "cb-crt",
+                                "subPath": "couchbase.crt"
+                            },
+                            {
+                                "mountPath": "/etc/gluu/conf/jackrabbit_admin_password",
+                                "name": "gluu-jackrabbit-admin-pass",
+                                "subPath": "jackrabbit_admin_password"
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "hostAliases": [
+                    {
+                        "hostnames": [
+                            "demoexample.gluu.org"
+                        ],
+                        "ip": "22.22.22.22"
+                    }
+                ],
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "terminationGracePeriodSeconds": 30,
+                "volumes": [
+                    {
+                        "name": "cb-pass",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "cb-pass"
+                        }
+                    },
+                    {
+                        "name": "cb-crt",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "cb-crt"
+                        }
+                    },
+                    {
+                        "name": "gluu-jackrabbit-admin-pass",
+                        "secret": {
+                            "defaultMode": 420,
+                            "secretName": "gluu-jackrabbit-admin-pass"
+                        }
+                    }
+                ]
+            }
+        },
+        "updateStrategy": {
+            "rollingUpdate": {
+                "partition": 0
+            },
+            "type": "RollingUpdate"
+        }
+    },
+    "status": {
+        "collisionCount": 0,
+        "currentReplicas": 1,
+        "currentRevision": "oxtrust-6479bb58cd",
+        "observedGeneration": 1,
+        "readyReplicas": 1,
+        "replicas": 1,
+        "updateRevision": "oxtrust-6479bb58cd",
+        "updatedReplicas": 1
+    }
+}
